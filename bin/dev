@@ -8,6 +8,14 @@ start_backend() {
   cd ..
 }
 
+start_seed(){
+  echo "Starting seed..."
+  cd backend
+  cd db
+  node seed.js &
+  cd ..
+}
+
 start_frontend() {
   echo "Starting frontend..."
   cd frontend
@@ -16,7 +24,11 @@ start_frontend() {
   cd ..
 }
 
+
 start_backend
 start_frontend
+start_seed
+
+
 
 wait
