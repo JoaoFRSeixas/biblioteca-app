@@ -6,7 +6,6 @@ import GlassEffectContainer from './containers/GlassEffectContainer';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
-
 const EditBookContainer = styled.div`
   padding: 20px;
 `;
@@ -65,6 +64,7 @@ const EditBook = () => {
     category: '',
     stock: 0,
   });
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchBook = async () => {
@@ -72,6 +72,7 @@ const EditBook = () => {
         const response = await fetch(`${apiUrl}/books/${id}`);
         const data = await response.json();
         setBook(data);
+        setIsLoading(false);
       } catch (error) {
         console.error('Erro ao buscar livro:', error);
       }
@@ -112,50 +113,58 @@ const EditBook = () => {
       <GlassEffectContainer>
         <EditBookContainer>
           <h1>Editar Livro</h1>
-          <FormContainer onSubmit={handleSubmit}>
-            <FormField>
-              <Label htmlFor="name">Título:</Label>
-              <Input
-                type="text"
-                id="name"
-                name="name"
-                value={book.name}
-                onChange={handleChange}
-              />
-            </FormField>
-            <FormField>
-              <Label htmlFor="author">Autor:</Label>
-              <Input
-                type="text"
-                id="author"
-                name="author"
-                value={book.author}
-                onChange={handleChange}
-              />
-            </FormField>
-            <FormField>
-              <Label htmlFor="category">Categoria:</Label>
-              <Input
-                type="text"
-                id="category"
-                name="category"
-                value={book.category}
-                onChange={handleChange}
-              />
-            </FormField>
-            <FormField>
-              <Label htmlFor="stock">Estoque:</Label>
-              <Input
-                type="number"
-                id="stock"
-                name="stock"
-                value={book.stock}
-                onChange={handleChange}
-              />
-            </FormField>
-            <StyledButton type="submit">Salvar</StyledButton>
-            <HomeButton onClick={() => navigate('/')}>Home</HomeButton>
-          </FormContainer>
+          {isLoading ? (
+            <p>Carregando...</p>
+          ) : (
+            <FormContainer onSubmit={handleSubmit}>
+              <FormField>
+                <Label htmlFor="name">Título:</Label>
+                <Input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={book.name}
+                  onChange={handleChange}
+                  placeholder="Título do livro"
+                />
+              </FormField>
+              <FormField>
+                <Label htmlFor="author">Autor:</Label>
+                <Input
+                  type="text"
+                  id="author"
+                  name="author"
+                  value={book.author}
+                  onChange={handleChange}
+                  placeholder="Autor do livro"
+                />
+              </FormField>
+              <FormField>
+                <Label htmlFor="category">Categoria:</Label>
+                <Input
+                  type="text"
+                  id="category"
+                  name="category"
+                  value={book.category}
+                  onChange={handleChange}
+                  placeholder="Categoria do livro"
+                />
+              </FormField>
+              <FormField>
+                <Label htmlFor="stock">Estoque:</Label>
+                <Input
+                  type="number"
+                  id="stock"
+                  name="stock"
+                  value={book.stock}
+                  onChange={handleChange}
+                  placeholder="Estoque do livro"
+                />
+              </FormField>
+              <StyledButton type="submit">Salvar</StyledButton>
+              <HomeButton onClick={() => navigate('/')}>Home</HomeButton>
+            </FormContainer>
+          )}
         </EditBookContainer>
       </GlassEffectContainer>
     </HomeContainer>

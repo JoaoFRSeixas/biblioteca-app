@@ -5,6 +5,18 @@ import HomeContainer from './containers/HomeContainer';
 import GlassEffectContainer from './containers/GlassEffectContainer';
 
 const apiUrl = process.env.REACT_APP_API_URL;
+
+const BackgroundImage = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  filter: blur(10px);
+  z-index: -1;
+`;
+
 const BookListContainer = styled.div`
   padding: 20px;
 `;
@@ -20,6 +32,8 @@ const BookTable = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+  max-height: 70vh;
+  overflow-y: auto;
 `;
 
 const BookItem = styled.div`
@@ -82,6 +96,7 @@ const ModalContent = styled.div`
   text-align: center;
 `;
 
+
 const BookList = () => {
   const [books, setBooks] = useState([]);
   const [filteredBooks, setFilteredBooks] = useState([]);
@@ -141,7 +156,7 @@ const BookList = () => {
   const handleSearch = async () => {
     if (searchCategory) {
       try {
-        const response = await fetch(`${apiUrl}books/category/${searchCategory}`);
+        const response = await fetch(`${apiUrl}/books/category/${searchCategory}`);
         const data = await response.json();
         setFilteredBooks(data);
       } catch (error) {
@@ -154,6 +169,7 @@ const BookList = () => {
 
   return (
     <HomeContainer>
+      <BackgroundImage />
       <GlassEffectContainer>
         <BookListContainer>
           <h1>Lista de Livros</h1>
