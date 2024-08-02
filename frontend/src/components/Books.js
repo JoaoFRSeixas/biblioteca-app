@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import HomeContainer from './containers/HomeContainer';
 import GlassEffectContainer from './containers/GlassEffectContainer';
 
-// Estilos
+const apiUrl = process.env.REACT_APP_API_URL;
 const BookListContainer = styled.div`
   padding: 20px;
 `;
@@ -92,10 +92,10 @@ const BookList = () => {
 
   const fetchBooks = async () => {
     try {
-      const response = await fetch('http://localhost:5000/books');
+      const response = await fetch(`${apiUrl}/books`);
       const data = await response.json();
       setBooks(data);
-      setFilteredBooks(data); // Inicialmente, todos os livros são exibidos
+      setFilteredBooks(data);
     } catch (error) {
       console.error('Erro ao buscar livros:', error);
     }
@@ -112,13 +112,13 @@ const BookList = () => {
   const handleDelete = async () => {
     if (bookToDelete) {
       try {
-        const response = await fetch(`http://localhost:5000/books/${bookToDelete}`, {
+        const response = await fetch(`${apiUrl}/books/${bookToDelete}`, {
           method: 'DELETE',
         });
         if (response.ok) {
-          fetchBooks(); // Recarrega a lista de livros após a exclusão
+          fetchBooks();
           setShowModal(false);
-          setBookToDelete(null); // Limpa o estado do ID do livro
+          setBookToDelete(null);
         } else {
           throw new Error('Erro ao excluir livro');
         }
@@ -129,26 +129,26 @@ const BookList = () => {
   };
 
   const openDeleteModal = (bookId) => {
-    setBookToDelete(bookId); // Atualiza o estado com o ID do livro a ser excluído
+    setBookToDelete(bookId);
     setShowModal(true);
   };
 
   const closeDeleteModal = () => {
     setShowModal(false);
-    setBookToDelete(null); // Limpa o estado do ID do livro
+    setBookToDelete(null);
   };
 
   const handleSearch = async () => {
     if (searchCategory) {
       try {
-        const response = await fetch(`http://localhost:5000/books/category/${searchCategory}`);
+        const response = await fetch(`${apiUrl}books/category/${searchCategory}`);
         const data = await response.json();
         setFilteredBooks(data);
       } catch (error) {
         console.error('Erro ao buscar livros por categoria:', error);
       }
     } else {
-      setFilteredBooks(books); // Se a pesquisa estiver vazia, mostra todos os livros
+      setFilteredBooks(books);
     }
   };
 
@@ -171,7 +171,6 @@ const BookList = () => {
             {filteredBooks.map(book => (
               <BookItem key={book._id}>
                 <BookDetails>
-                  <div><strong>Id:</strong> {book.id}</div>
                   <div><strong>Nome:</strong> {book.name}</div>
                   <div><strong>Autor:</strong> {book.author}</div>
                   <div><strong>Categoria:</strong> {book.category}</div>

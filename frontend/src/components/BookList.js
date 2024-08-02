@@ -5,7 +5,6 @@ import HomeContainer from './containers/HomeContainer';
 import GlassEffectContainer from './containers/GlassEffectContainer';
 import ButtonContainer from './containers/ButtonContainer';
 
-// Estilos
 const BookListContainer = styled(HomeContainer)`
   padding: 20px;
 `;

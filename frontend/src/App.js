@@ -12,7 +12,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/add-book" element={<AddBook />} />
         <Route path="/edit-book/:id" element={<EditBook />} />
-        <Route path="/books" element={<Books />} /> {/* Nova rota */}
+        <Route path="/books" element={<Books />} /> { }
       </Routes>
     </Router>
   );

@@ -39,21 +39,21 @@ const inputStyle = {
 };
 
 const titleStyle = {
-  marginBottom: '20px', // Adiciona espaço entre o título e o formulário
+  marginBottom: '20px',
 };
 
 const messageStyle = {
   margin: '10px 0',
   padding: '10px',
   borderRadius: '5px',
-  backgroundColor: '#d4edda', // Cor verde claro para sucesso
-  color: '#155724', // Cor verde escuro
+  backgroundColor: '#d4edda',
+  color: '#155724',
 };
 
 const errorMessageStyle = {
   ...messageStyle,
-  backgroundColor: '#f8d7da', // Cor vermelha clara para erro
-  color: '#721c24', // Cor vermelha escura
+  backgroundColor: '#f8d7da',
+  color: '#721c24',
 };
 
 const buttonContainerStyle = {
@@ -85,7 +85,7 @@ const AddBook = () => {
     setError('');
 
     try {
-      const response = await fetch(`http://localhost:5000/books`, {
+      const response = await fetch(`${apiUrl}/books`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -98,9 +98,9 @@ const AddBook = () => {
       }
 
       const data = await response.json();
-      setMessage('Livro adicionado com sucesso!'); // Mensagem de sucesso
+      setMessage('Livro adicionado com sucesso!');
     } catch (error) {
-      setError(error.message); // Mensagem de erro
+      setError(error.message);
     } finally {
       setLoading(false);
     }

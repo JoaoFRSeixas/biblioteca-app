@@ -4,7 +4,9 @@ import styled from 'styled-components';
 import HomeContainer from './containers/HomeContainer';
 import GlassEffectContainer from './containers/GlassEffectContainer';
 
-// Estilos
+const apiUrl = process.env.REACT_APP_API_URL;
+
+
 const EditBookContainer = styled.div`
   padding: 20px;
 `;
@@ -67,7 +69,7 @@ const EditBook = () => {
   useEffect(() => {
     const fetchBook = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/books/${id}`);
+        const response = await fetch(`${apiUrl}/books/${id}`);
         const data = await response.json();
         setBook(data);
       } catch (error) {
@@ -88,7 +90,7 @@ const EditBook = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:5000/books/${id}`, {
+      const response = await fetch(`${apiUrl}/books/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
