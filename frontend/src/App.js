@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './components/Home';
 import AddBook from './components/AddBook';
 import EditBook from './components/EditBook';
-import Books from './components/Books'; // Certifique-se de ter criado este componente
+import Books from './components/Books';
 
 const App = () => {
   return (

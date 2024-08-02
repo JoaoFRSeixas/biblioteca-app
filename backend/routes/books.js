@@ -3,13 +3,11 @@ import * as bookModel from '../models/Books.js';
 
 const router = express.Router();
 
-// Middleware para conectar com o banco de dados
 router.use((req, res, next) => {
   req.db = req.app.get('db');
   next();
 });
 
-// Obter todos os livros
 router.get('/', (req, res) => {
   bookModel.getAllBooks(req.db, (err, results) => {
     if (err) {
@@ -20,7 +18,6 @@ router.get('/', (req, res) => {
   });
 });
 
-// Obter um livro pelo ID
 router.get('/:id', (req, res) => {
   const { id } = req.params;
   bookModel.getBookById(req.db, id, (err, result) => {
@@ -37,7 +34,6 @@ router.get('/:id', (req, res) => {
 });
 
 
-// Obter livros por categoria
 router.get('/category/:category', (req, res) => {
   const { category } = req.params;
   bookModel.getBooksByCategory(req.db, category, (err, results) => {
@@ -49,7 +45,6 @@ router.get('/category/:category', (req, res) => {
   });
 });
 
-// Adicionar um novo livro
 router.post('/', (req, res) => {
   const { name, author, category, stock } = req.body;
   bookModel.addBook(req.db, { name, author, category, stock }, (err, results) => {
@@ -61,7 +56,6 @@ router.post('/', (req, res) => {
   });
 });
 
-// Atualizar um livro
 router.put('/:id', (req, res) => {
   const { id } = req.params;
   const { name, author, category, stock } = req.body;
@@ -74,7 +68,6 @@ router.put('/:id', (req, res) => {
   });
 });
 
-// Excluir um livro
 router.delete('/:id', (req, res) => {
   const { id } = req.params;
   bookModel.deleteBook(req.db, id, (err) => {

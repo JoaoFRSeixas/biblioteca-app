@@ -29,11 +29,9 @@ const inventoryService = async (inventoryData) => {
         try {
           resolve(JSON.parse(output));
         } catch (parseError) {
-          console.error("Erro ao analisar JSON:", parseError);
           reject(new Error('Failed to parse JSON from Python script output'));
         }
       } else {
-        console.error("Script Python saiu com código:", code);
         reject(new Error(`Python script exited with code ${code}. Error: ${errorOutput}`));
       }
     });
