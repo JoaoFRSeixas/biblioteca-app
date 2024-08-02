@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+const apiUrl = process.env.REACT_APP_API_URL;
 
 const HomeContainer = styled.div`
   display: flex;
@@ -10,7 +11,6 @@ const HomeContainer = styled.div`
   background-image: url('https://cdn.pixabay.com/photo/2022/08/24/15/42/library-7408106_1280.jpg');
   background-size: cover;
   background-position: center;
-  
 `;
 
 const GlassEffectContainer = styled.div`
@@ -61,7 +61,37 @@ const Button = styled(Link)`
   }
 `;
 
+const DownloadButton = styled.button`
+  padding: 10px 20px;
+  font-size: 1.2em;
+  background-color: #FF90CD;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+
+  &:hover {
+    background-color: #e57fb5;
+  }
+`;
+
 const Home = () => {
+  const handleDownload = () => {
+    fetch(`${apiUrl}/analyze-inventory`)
+      .then(response => response.blob())
+      .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'analysis_result.json';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      })
+      .catch(error => console.error('Erro ao baixar o arquivo:', error));
+  };
+
   return (
     <HomeContainer>
       <GlassEffectContainer>
@@ -72,6 +102,7 @@ const Home = () => {
         <ButtonContainer>
           <Button to="/add-book">Criar Novo Livro</Button>
           <Button to="/books">Ver Biblioteca</Button>
+          <DownloadButton onClick={handleDownload}>Gerar Análise</DownloadButton>
         </ButtonContainer>
       </GlassEffectContainer>
     </HomeContainer>
