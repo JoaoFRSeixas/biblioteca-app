@@ -1,0 +1,22 @@
+#!/bin/bash
+
+start_backend() {
+  echo "Starting backend..."
+  cd backend
+  npm install
+  npm start &
+  cd ..
+}
+
+start_frontend() {
+  echo "Starting frontend..."
+  cd frontend
+  npm install
+  npm start &
+  cd ..
+}
+
+start_backend
+start_frontend
+
+wait
