@@ -3,7 +3,8 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import db from './db/db.js';
 import bookRoutes from './routes/books.js';
-
+import inventoryService from './services/inventoryService.js';
+import pool from './db/dbConfig.js';
 const app = express();
 app.set('db', db);
 
@@ -23,4 +24,15 @@ app.listen(PORT, () => {
 
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'Backend is up and running!' });
+});
+
+
+app.get('/analyze-inventory', async (req, res) => {
+  try {
+    const [rows] = await pool.query('SELECT * FROM books');
+    const analysisResult = await inventoryService(rows);
+    res.json(analysisResult);
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao realizar análise de inventário' });
+  }
 });

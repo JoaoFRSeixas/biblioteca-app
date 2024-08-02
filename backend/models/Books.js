@@ -1,4 +1,3 @@
-// models/bookModel.js
 export const getAllBooks = (db, callback) => {
   db.query('SELECT * FROM books', callback);
 };
