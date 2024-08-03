@@ -5,6 +5,9 @@ import db from './db/db.js';
 import bookRoutes from './routes/books.js';
 import inventoryService from './services/inventoryService.js';
 import pool from './db/dbConfig.js';
+
+import dotenv from 'dotenv';
+
 const app = express();
 app.set('db', db);
 

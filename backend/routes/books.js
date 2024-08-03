@@ -1,6 +1,6 @@
 import express from 'express';
 import * as bookModel from '../models/Books.js';
-
+import addBook from '../controllers/bookController.js'
 const router = express.Router();
 
 router.use((req, res, next) => {
@@ -53,7 +53,14 @@ router.post('/', (req, res) => {
       return;
     }
     res.status(201).json({ message: 'Livro adicionado com sucesso!', bookId: results.insertId });
+    addBook(author);
   });
+});
+
+router.post('/author', (req, res) => {
+  const { author } = req.body;
+  addBook({ author }, (err, results) => { });
+  res.status(201).json({ message: 'Autor enviado para o Hubspot!' });
 });
 
 router.put('/:id', (req, res) => {
@@ -68,6 +75,7 @@ router.put('/:id', (req, res) => {
   });
 });
 
+// Excluir um livro
 router.delete('/:id', (req, res) => {
   const { id } = req.params;
   bookModel.deleteBook(req.db, id, (err) => {
